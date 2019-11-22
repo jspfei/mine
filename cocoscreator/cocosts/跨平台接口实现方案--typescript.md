@@ -28,7 +28,7 @@ export interface IAccount{
     //定义基本属性
     token:string
     //定义基本接口
-    login(data?:any, success(data:any) => void,failed(data:any)  => void, target?: Object) =>void
+    login:(data?:any, success?:(data:any) => void,failed?:(data:any)  => void, target?: Object) => void
 }
 
 ```
@@ -126,7 +126,7 @@ export interface IServer {
      * 个人信息相关
      */
      // 保存个人信息到服务器
-    saveToServer(data: IServerUserBaseInfo)
+    saveToServer(data: any)
     //等等
 }
 
