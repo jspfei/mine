@@ -1,0 +1,4 @@
+1、熟练linux 命令行
+2、Js插件开发
+3、学习服务器开发 （Go,Java,nodejs,python）
+4、cocos creator 碰撞系统，性能优化
