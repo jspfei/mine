@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="styles.css">
   <title>Vue cdn</title>
 
 </head>
@@ -14,7 +15,66 @@
   <div id="vue-app">
     <h1>Hello, {{name}}</h1>
     <p>你的QQ是：{{qq}}</p>
+    <p>{{greet('money')}}</p>
+    <p>{{haveLuanch()}}</p>
+    <h1>属性绑定 v-bind</h1>
+    <p>----------------</p>
+    <p>
+      <!-- <a v-bind:href="website">baidu</a> -->
+      <a :href="website">baidu</a>
+    </p>
+    <p v-html="websiteTag"> </p>
+    <p><input type="text" v-bind:value="inputtip"></p>
+
+
+    <h1>Events</h1>
+    <p>----------------</p>
+    <!-- <button @click="age++">add a year</button>
+    <button v-on:click="age--">subtract a year</button> -->
+    <button @click.once="add(1)">add a year</button>
+    <button v-on:click="subtract(1)">subtract a year</button>
+    <button @dblclick="add(10)">add 10 year</button>
+    <button v-on:dblclick="subtract(10)">subtract 10 year</button>
+    <p>{{age}}</p>
+
+    <!-- mousemove event事件 -->
+    <div id="canvas" v-on:mousemove="updateXY">
+      {{ x }} , {{ y }}
+    </div>
+
+    <!-- 事件修饰符 -->
+    <p><a @click.prevent="handlerClick" href="https://www.baidu.com">百度</a></p>
+
+    <!-- 键盘事件 -->
+    <p>
+      <label>姓名</label>
+      <input type="text" v-on:keydown.enter="logName">
+      <label>年龄</label>
+      <input type="text" v-on:keyup.alt.enter="logAge">
+    </p>
+
+    <!-- 双向数据绑定 input / select / textarea -->
+    <p>
+      <label>姓名</label>
+      <input v-model.lazy="name" type="text" />
+      <span>{{ name }}</span>
+      <label>年龄</label>
+      <input type="text" v-model="age" />
+      <span>{{ age }}</span>
+    </p>
+
+
+    <!-- ref 获取对应 doucment 元素对象 -->
+    <p>
+      <label>姓名</label>
+      <input ref="name" type="text" @keyup="getNames" />
+      <span>{{ name }}</span>
+      <label>年龄</label>
+      <input type="text" ref="age" @keyup="getAges" />
+      <span>{{ age }}</span>
+    </p>
   </div>
+
 
   <script src="app.js"></script>
 </body>
