@@ -22,6 +22,8 @@ v-bind是处理HTML中的标签属性的，例如
 
 绑定 html ，例如：vue 的属性是html  “<a href='https://www.taobao.com'>tabbao</a>”。
 
+尽力少用，会引起 xss 攻击，提交表单的时候不要使用
+
 ```html
 <p>
       <!-- <a v-bind:href="website">baidu</a> -->
@@ -31,7 +33,9 @@ v-bind是处理HTML中的标签属性的，例如
     <p><input type="text" v-bind:value="inputtip"></p>
 ```
 
+#### v-text
 
+可以解决网速慢的时候，当message有值的时候才会显示
 
 #### v-on 
 
@@ -136,4 +140,88 @@ v-model.trim : 将前后空格去掉。
 只在第一次才会渲染
 
 
+
+### 全局API
+
+### Vue.directive
+
+一、自定义指令中传递的三个参数
+
+- el: 指令所绑定的元素，可以用来直接操作DOM。
+- binding: 一个对象，包含指令的很多信息。
+- vnode: Vue编译生成的虚拟节点。
+
+```js
+ Vue.directive("jf", (el, binding) => {
+      // console.log(el);
+      // console.log(binding)
+      // console.log(binding.name);
+      // console.log(binding.value);
+      el.style = "color:" + binding.value;
+
+      //五个钩子函数
+    })
+```
+
+
+
+二、自定义指令的生命周期
+
+自定义指令有五个生命周期（也叫钩子函数），分别是 bind,inserted,update,componentUpdated,unbind
+
+1. bind:只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个绑定时执行一次的初始化动作。
+2. inserted:被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于document中）。
+3. update:被绑定于元素所在的模板更新时调用，而无论绑定值是否变化。通过比较更新前后的绑定值，可以忽略不必要的模板更新。
+4. componentUpdated:被绑定元素所在模板完成一次更新周期时调用。
+5. unbind:只调用一次，指令与元素解绑时调用。
+
+挂载钩子函数
+
+```js
+ Vue.directive("jf", {
+      bind: function () {//被绑定
+        console.log('1 - bind');
+         el.style = "color:" + binding.value;
+      },
+      inserted: function () {//绑定到节点
+        console.log('2 - inserted');
+      },
+      update: function () {//组件更新
+        console.log('3 - update');
+      },
+      componentUpdated: function () {//组件更新完成
+        console.log('4 - componentUpdated');
+      },
+      unbind: function () {//解绑
+        console.log('1 - bind');
+      }
+    })
+```
+
+三、外部调用解绑
+
+```js
+//解绑
+    function unbind() {
+      app.$destroy();
+    }
+```
+
+#### Vue.extend
+
+Vue.extend 返回的是一个“扩展实例构造器”,也就是预设了部分选项的Vue实例构造器。经常服务于Vue.component用来生成组件，可以简单理解为当在模板中遇到该组件名称作为标签的自定义元素时，会自动调用“扩展实例构造器”来生产组件实例，并挂载到自定义元素上。
+
+#### Vue.set
+
+Vue.set 的作用就是在构造器外部操作构造器内部的数据、属性或者方法。
+
+#### Component 
+
+组件注册的是一个标签，而指令注册的是已有标签里的一个属性。
+
+
+
+#### $mount
+
+$mount方法是用来挂载我们的扩展的
 
