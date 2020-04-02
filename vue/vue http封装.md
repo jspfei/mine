@@ -31,8 +31,8 @@ const KP = {
   iv: '1234567812345678' // 偏移量
 }
 const KEYS = {
-  register: 'jkeskewsoiesjieskelsjesdhjeksaas', // 注册使用加密密钥
-  live: 'yewachdoeiduxdewndmzcnvdewdssaas' // 登录成功以后加密密钥
+  register: '', // 32位注册使用加密密钥
+  live: '' // 32位登录成功以后加密密钥
 }
 const KEYTYPE = {
   REGISTER: 'register',
@@ -157,9 +157,8 @@ export {
  */
 import axios from 'axios'
 
-import { aes } from './crypto'
-// var root = 'http://h5api.miaobolive.com/'
-var root = 'http://60.191.222.11:8088'
+import { aes } from './crypto' 
+var root = ''//服务器地址
 
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
@@ -306,32 +305,11 @@ export function post1(url, params, type) {//post不加密或者之前加密
 import { post } from './http'
 import { KEYTYPE } from './crypto'
 
-// export const hotList = params => get('Home/GetHotLive', params)
+export const hotList = params => get('接口', params)
 // 获取注册码
-export const checkPhone = params => post('/Account/CheckPhone', params, KEYTYPE.REGISTER)
-
-// 登录|注册账号
-export const phoneLogin = params => post('/Account/PhoneLogin', params, KEYTYPE.REGISTER)
-
-// 游客登录
-export const getTourist = params => post('/Account/TouristDistribute', params, KEYTYPE.REGISTER)
+export const checkPhone = params => post('接口', params, KEYTYPE.REGISTER)
+ 
 
 ```
 
-
-
-2、定义大厅接口 hall.js
-
-
-
-```js
-/**
- * 热门大厅http封装接口
- */
-
-import { get } from './http'
-// 获取 主播列表
-export const hotList = p => get('/Home/getPlatformRoom', p)
-
-```
 
