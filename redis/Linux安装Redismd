@@ -1,0 +1,115 @@
+### linux安装Redis
+
+1、先安装 gcc , 不然后续make 的时候回出错 
+
+```
+yum -y install gcc-c++
+```
+
+2、在官网http://www.redis.cn/download.html，下载最新稳定版本 5.0.5
+
+3、通过远程管理工具，将压缩包拷贝到Linux服务器中，执行解压操作。
+
+将redis-5.0.5.tar.gz 复制到 /usr/local 目录
+
+linux 解压命令
+
+```
+cd /usr/local
+tar xzf redis-5.0.5.tar.gz
+```
+
+4、进入到解压路径
+
+```
+cd redis-5.0.5
+```
+
+5、编译
+
+```
+make
+```
+
+编译完成之后，可以看到解压文件redis-4.0.8 中会有对应的src、conf等文件夹，这和[windows](https://www.baidu.com/s?wd=windows&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd)下安装解压的文件一样，大[部分安装](https://www.baidu.com/s?wd=部分安装&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd)包都会有对应的类文件、配置文件和一些命令文件。进入到src目录，里边有很多关键性文件：
+
+6、编译完成后redis就可以使用了
+
+进入到redis的压缩目录的src下
+
+```
+cd redis-5.0.0/src
+```
+
+开启服务
+
+```
+./redis-server
+
+```
+
+启动成功后会显示redis的pid按住crtl+c 可以退出服务.
+
+
+
+7、为了方便管理，将redis-5.0.0文件目录中的conf配置文件和src目录中常用命令拷贝到统一文件中：
+
+在redis-5.0.0目录下新建etc和bin文件夹
+
+```
+[root@VM_0_4_centos src]# cp ../redis.conf /usr/local/redis-5.0.0/etc
+
+[root@VM_0_4_centos src]# cp redis-cli redis-server mkreleasehdr.sh redis-check-aof redis-check-rdb
+
+redis-benchmark /usr/local/redis-5.0.0/bin
+```
+
+7.1 后台启动redis服务
+
+a.修改/usr/local/redis-5.0.0/etc/redis.conf配置文件，命令 vim redis.conf，将后台启动打开，即将daemonize选项由no置为yes
+
+
+
+b.再次启动redis服务，并指定启动服务配置文件，执行命令
+
+进入刚才放置Redis启动文件目录 /usr/local/redis-5.0.0/bin目录，执行./redis-server ../etc/redis.conf脚本文件:
+
+查看进程：ps -A | grep redis 可以看到提示Redis服务已经启动，并且返回版本信息及进程号，这时表明Redis已经启动。
+
+
+
+7.2 简单使用启动redis
+
+```
+cd /usr/local/redis-5.0.5/bin
+./redis-cli
+```
+
+
+
+7.3 停用redis
+
+先查看redis后天进程 2个
+
+```
+ps -ef | grep redis
+```
+
+\#检测6379端口是否在监听
+
+```
+netstat -lntp | grep 6379
+```
+
+停用命令
+
+```
+./redis-cli shutdown 
+```
+
+先查看redis后天进程 1个
+
+```
+ps -ef | grep redis
+```
+
